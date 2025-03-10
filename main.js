@@ -13,7 +13,7 @@ let stopTime = 0;
 // タイムアウトID
 let timeoutID;
 
-$watch.textContent ='0 : 0 : 0 : 0:'
+$watch.textContent ='0 : 0 : 0 : 0'
 
 // 時間を表示する関数
 function displayTime() {
@@ -22,8 +22,8 @@ function displayTime() {
   const h = String(currentTime.getHours() - 9);
   const m = String(currentTime.getMinutes());
   const s = String(currentTime.getSeconds());
-  const ms = String(currentTime.getMilliseconds() % 10  );
-  $watch.textContent = `${h}:${m}:${s}.${ms}`;
+  const ms = String(currentTime.getMilliseconds() % 1000 / 10).slice(0,1);
+  $watch.textContent = `${h}:${m}:${s}.${(ms)}`;
   timeoutID = setTimeout(displayTime, 10);
 }
 
