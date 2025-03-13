@@ -1,39 +1,56 @@
-let result = document.getElementById("display");
+// ストップウォッチの定義
+const $watch = document.getElementById("js-stopwatch");
+const $start = document.getElementById("js-stopwatchStart");
+const $stop = document.getElementById("js-stopwatchStop");
+const $resset = document.getElementById("js-stopwatchResset");
 
-function equal() {
-    result.innerHTML = eval(result.innerHTML);
+// 開始時間
+let startTime;
+
+// 停止時間
+let stopTime = 0;
+
+// タイムアウトID
+let timeoutID;
+
+$watch.textContent ='0 : 0 : 0 : 0'
+
+// 時間を表示する関数
+function displayTime() {
+  
+  const currentTime = new Date(Date.now() - startTime + stopTime);
+  const h = String(currentTime.getHours() - 9);
+  const m = String(currentTime.getMinutes());
+  const s = String(currentTime.getSeconds());
+  const ms = String(currentTime.getMilliseconds() % 1000 / 10).slice(0,1);
+  $watch.textContent = `${h}:${m}:${s}.${(ms)}`;
+  timeoutID = setTimeout(displayTime, 10);
 }
 
-function reset() {
-    result.innerHTML ="0";
-}
+// スタートボタンがクリックされたら時間を進める部分
+$start.addEventListener("click", () => {
+  $start.disabled = true;
+  $stop.disabled = false;
+  $resset.disabled = true;
+  startTime = Date.now();
+  displayTime();
+  $watch.textContent = "0:0:0:0";
+});
 
-function clickbutton(target){
-  let input = target.innerHTML;
-    if(result.innerHTML == "0" || result.innerHTML == "00") {
-        result.innerHTML = input;
-    }else{
-        result.innerHTML +=input;
-    }
-}
+// ストップボタンがクリックされたら時間を止める部分
+$stop.addEventListener("click", function () {
+  $start.disabled = false;
+  $stop.disabled = true;
+  $resset.disabled = false;
+  clearTimeout(timeoutID);
+  stopTime += Date.now() - startTime;
+});
 
-function edit(target){
-    let input = target.innerHTML;
-
-    if(result.innerHTML.slice(-1) == "-") {
-        return;
-    }else if(result.innerHTML.slice(-1) == "+"){
-        return;
-    }else if(result.innerHTML.slice(-1) == "*"){
-        return;
-    }else if(result.innerHTML.slice(-1) == "/"){
-        return;
-    }else if(result.innerHTML.slice(-1) == "."){
-        return;
-    }else{
-        result.innerHTML += input;
-        return "E";
-    }
-
-
-}
+// リセットボタンがクリックされたら時間を0に戻す部分
+$resset.addEventListener("click", function () {
+  $start.disabled = false;
+  $stop.disabled = true;
+  $resset.disabled = true;
+  $watch.textContent = "0:0:0:0";
+  stopTime = 0;
+});
