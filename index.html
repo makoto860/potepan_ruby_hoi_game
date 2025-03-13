@@ -1,20 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="main.css">
-    <title>ストップウォッチの課題</title>
-  </head>
-
-  <body>
-    <h1></h1>
-    <h2>ストップウォッチ</h2>
-    <div class="stopwatch">
-      <p id="js-stopwatch">0:0:0:0</p>
-      <input id="js-stopwatchStart" type="button" value="開始" />
-      <input id="js-stopwatchStop" type="button" value="停止" disabled />
-      <input id="js-stopwatchResset" type="button" value="リセット" disabled />
-    </div>
-    <script src="main.js"></script>
-  </body>
-</html>
+    <html lang="ja">
+      <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="main.css">
+        <title>Calculator</title></title>
+      </head>
+ 
+      <body>
+        <h1>電卓</h1>
+        <h1>コメント:</h1>
+        <table>
+          <tr>
+            <td><div id="display"></div></td>
+          </tr>
+          
+          <tr>
+            <td><button onclick="clickbutton(this)">7</button></td>
+            <td><button onclick="clickbutton(this)">8</button></td>
+            <td><button onclick="clickbutton(this)">9</button></td>
+            <td><button onclick="edit(this)">+</button></td>
+          </tr>
+          
+          <tr>
+            <td><button onclick="clickbutton(this)">4</button></td>
+            <td><button onclick="clickbutton(this)">5</button></td>
+            <td><button onclick="clickbutton(this)">6</button></td>
+            <td><button onclick="edit(this)">-</button></td>
+          </tr>
+          
+          <tr>
+            <td><button onclick="clickbutton(this)">1</button></td>
+            <td><button onclick="clickbutton(this)">2</button></td>
+            <td><button onclick="clickbutton(this)">3</button></td>
+            <td><button onclick="edit(this)">*</button></td>
+          </tr>
+          
+          <tr>
+            <td><button onclick="clickbutton(this)">0</button></td>
+            <td><button onclick="clickbutton(this)">00</button></td>
+            <td><button onclick="edit(this)">.</button></td>
+            <td><button onclick="edit(this)">/</button></td>
+          </tr>
+          
+          <tr>
+            <td><button class="longbutton" onclick="reset(this)">AC</button></td>
+            <td><button class="longbutton" onclick="equal(this)">=</button></td>
+          </tr>
+          
+        </table>
+        
+       
+      
+      <script src="main.js"></script>
+      </body>
+    </html>
