@@ -1,39 +1,79 @@
-let result = document.getElementById("display");
+let currentInput = "";
+let operator = "";
+let expression = "";
+let canInputNumber = true;
 
-function equal() {
-    result.innerHTML = eval(result.innerHTML);
-}
+function get_calc(element) {
+    const value = element.value;
+    const totalDisplay = document.getElementById("Total");
 
-function reset() {
-    result.innerHTML ="0";
-}
-
-function clickbutton(target){
-  let input = target.innerHTML;
-    if(result.innerHTML == "0" || result.innerHTML == "00") {
-        result.innerHTML = input;
-    }else{
-        result.innerHTML +=input;
-    }
-}
-
-function edit(target){
-    let input = target.innerHTML;
-
-    if(result.innerHTML.slice(-1) == "-") {
+    if (value === "AC") {
+        currentInput = "";
+        operator = "";
+        expression = ""; 
+        totalDisplay.textContent = "0";
+        canInputNumber = true;
         return;
-    }else if(result.innerHTML.slice(-1) == "+"){
-        return;
-    }else if(result.innerHTML.slice(-1) == "*"){
-        return;
-    }else if(result.innerHTML.slice(-1) == "/"){
-        return;
-    }else if(result.innerHTML.slice(-1) == "."){
-        return;
-    }else{
-        result.innerHTML += input;
-
     }
 
+    if (value === "00" && currentInput === "" && expression === "") {
+        return;
+    }
 
+    if (value === "." && currentInput === "") {
+        return;
+    }
+
+    if (currentInput.endsWith(".") && (["+", "-", "*", "/", "."].includes(value))) {
+        return;
+    }
+
+    if (currentInput === "0" && !isNaN(value) && value !== "0") {
+        currentInput = value;
+        totalDisplay.textContent = expression + currentInput;
+        return;
+    }
+
+    if (["+", "-", "*", "/"].includes(value)) {
+        if (currentInput === "" && expression === "") {
+            return;
+        }
+
+        if (expression !== "" && currentInput === "") {
+            expression = expression.slice(0, -1) + value;
+        } else {
+            expression += currentInput + value;
+        }
+        totalDisplay.textContent = expression;
+        currentInput = "";
+        canInputNumber = true;
+        return;
+    }
+
+    if (!isNaN(value) || value === ".") {
+        if (!canInputNumber) {
+            return; 
+        }
+
+        if (value === "." && currentInput.includes(".")) {
+            return;
+        }
+
+        currentInput += value;
+        totalDisplay.textContent = expression + currentInput;
+        return;
+    }
+
+    if (value === "=") {
+        if (currentInput !== "") {
+            expression += currentInput;
+                const result = eval(expression.trim());
+                const roundedResult = Math.round(result * 100) / 100;
+                totalDisplay.textContent = roundedResult;
+                currentInput = roundedResult.toString();
+                expression = "";
+                canInputNumber = false;
+        }
+    return
+    }  
 }
